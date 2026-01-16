@@ -9,6 +9,7 @@ import {
   removeFromCart,
   changeQty,
 } from "../services/cart.js";
+import Navbar from "../components/Navbar.jsx";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -77,57 +78,61 @@ export default function Home() {
   if (error) return <p className="container">{error}</p>;
 
   return (
-    <div className="container">
-      <h1>Smart Products</h1>
+    <>
+      <Navbar count={cartCount(cart)} onOpenCart={() => setCartOpen(true)} />
 
-      {/* Controls */}
-      <div className="controls">
-        <input
-          className="input"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search products..."
-        />
+      <div className="container">
+        <h1>Products</h1>
+        {/* Controls */}
+        <div className="controls">
+          <input
+            className="input"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search products..."
+          />
 
-        <select
-          className="select"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          {categories.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
+          <select
+            className="select"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            {categories.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="select"
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+          >
+            <option value="default">Sort</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+            <option value="title-asc">Title: A → Z</option>
+          </select>
+        </div>
+
+        <p style={{ marginTop: 10, opacity: 0.7 }}>
+          Showing {visibleProducts.length} / {products.length}
+        </p>
+
+        <p style={{ marginTop: 8, fontWeight: 700 }}>
+          <button className="btn" onClick={() => setCartOpen(true)}>
+            Cart ({cartCount(cart)})
+          </button>
+        </p>
+
+        <div className="grid" style={{ marginTop: 12 }}>
+          {visibleProducts.map((p) => (
+            <ProductCard key={p.id} product={p} onAdd={handleAdd} />
           ))}
-        </select>
-
-        <select
-          className="select"
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-        >
-          <option value="default">Sort</option>
-          <option value="price-asc">Price: Low → High</option>
-          <option value="price-desc">Price: High → Low</option>
-          <option value="title-asc">Title: A → Z</option>
-        </select>
+        </div>
       </div>
 
-      <p style={{ marginTop: 10, opacity: 0.7 }}>
-        Showing {visibleProducts.length} / {products.length}
-      </p>
-
-      <p style={{ marginTop: 8, fontWeight: 700 }}>
-        <button className="btn" onClick={() => setCartOpen(true)}>
-          Cart ({cartCount(cart)})
-        </button>
-      </p>
-
-      <div className="grid" style={{ marginTop: 12 }}>
-        {visibleProducts.map((p) => (
-          <ProductCard key={p.id} product={p} onAdd={handleAdd} />
-        ))}
-      </div>
       {cartOpen && (
         <CartPanel
           cart={cart}
@@ -136,6 +141,6 @@ export default function Home() {
           onQty={handleQty}
         />
       )}
-    </div>
+    </>
   );
 }
