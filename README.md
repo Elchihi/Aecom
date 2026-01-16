@@ -4,7 +4,7 @@ A modern **React + Vite** mini e-commerce application that demonstrates real-wor
 
 ## 🚀 Live Demo
 
-👉 https://YOUR-NETLIFY-LINK.netlify.app
+https://smart-products-ecom.netlify.app/
 
 ## 📦 Features
 
@@ -54,7 +54,7 @@ src/
 ## ⚙️ Installation & Run Locally
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
+git clone https://github.com/Elchihi/Aecom.git
 cd YOUR-REPO
 npm install
 npm run dev
@@ -76,22 +76,11 @@ Creating a production-ready front-end project
 Adham Mostafa
 Front-End React Developer
 
-GitHub: https://github.com/YOUR-USERNAME
+GitHub: https://github.com/Elchihi
 
-LinkedIn: https://linkedin.com/in/YOUR-LINK
+LinkedIn: https://www.linkedin.com/in/adham-mostafa-t7/
 
 
 ---
 
-## 🔥 نصيحة CV
-في الـ CV اكتب:
-> **Smart Products – React E-commerce App**
-> Built a responsive React e-commerce app with product filtering, cart management, localStorage persistence, and Netlify deployment.
-
-لو حابب:
-- أظبطهولك **بالإنجليزي HR قوي**
-- أو نعدله حسب **شركة معينة**
-- أو نضيف **Screenshots**
-
-قولي 👇
 ```
