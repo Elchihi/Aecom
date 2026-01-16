@@ -3,9 +3,11 @@
 A modern **React + Vite** mini e-commerce application that demonstrates real-world front-end skills such as API integration, state management, reusable components, and UI/UX polish.
 
 ## 🚀 Live Demo
+
 👉 https://YOUR-NETLIFY-LINK.netlify.app
 
 ## 📦 Features
+
 - Fetch products from a real API
 - Loading & error handling
 - Search products by name
@@ -23,6 +25,7 @@ A modern **React + Vite** mini e-commerce application that demonstrates real-wor
 - Clean and scalable project structure
 
 ## 🛠️ Built With
+
 - **React**
 - **Vite**
 - **JavaScript (ES6+)**
@@ -31,6 +34,7 @@ A modern **React + Vite** mini e-commerce application that demonstrates real-wor
 - **Netlify** (deployment)
 
 ## 📂 Project Structure
+
 src/
 ├─ components/
 │ ├─ Navbar.jsx
@@ -48,6 +52,7 @@ src/
 └─ main.jsx
 
 ## ⚙️ Installation & Run Locally
+
 ```bash
 git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
 cd YOUR-REPO
@@ -80,7 +85,7 @@ LinkedIn: https://linkedin.com/in/YOUR-LINK
 
 ## 🔥 نصيحة CV
 في الـ CV اكتب:
-> **Smart Products – React E-commerce App**  
+> **Smart Products – React E-commerce App**
 > Built a responsive React e-commerce app with product filtering, cart management, localStorage persistence, and Netlify deployment.
 
 لو حابب:
@@ -89,3 +94,4 @@ LinkedIn: https://linkedin.com/in/YOUR-LINK
 - أو نضيف **Screenshots**
 
 قولي 👇
+```
