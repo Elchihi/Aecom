@@ -1,35 +1,97 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getProducts } from "../services/productApi.js";
 import ProductCard from "../components/ProductCard.jsx";
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+
+  // UI state
+  const [search, setSearch] = useState("")
+  const [category, setCategory] = useState("all")
+  const [sort, setSort] = useState("default")
 
   useEffect(() => {
     getProducts()
-      .then((data) => {
-        setProducts(data);
-        setLoading(false);
+      .then(data => {
+        setProducts(data)
+        setLoading(false)
       })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+      .catch(err => {
+        setError(err.message)
+        setLoading(false)
+      })
+  }, [])
 
-  if (loading) return <p className="container">Loading...</p>;
-  if (error) return <p className="container">{error}</p>;
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(products.map(p => p.category)))
+    return ["all", ...unique]
+  }, [products])
+
+  const visibleProducts = useMemo(() => {
+    let list = [...products]
+
+    // filter by category
+    if (category !== "all") {
+      list = list.filter(p => p.category === category)
+    }
+
+    // search by title
+    const q = search.trim().toLowerCase()
+    if (q) {
+      list = list.filter(p => p.title.toLowerCase().includes(q))
+    }
+
+    // sort
+    if (sort === "price-asc") list.sort((a, b) => a.price - b.price)
+    if (sort === "price-desc") list.sort((a, b) => b.price - a.price)
+    if (sort === "title-asc") list.sort((a, b) => a.title.localeCompare(b.title))
+
+    return list
+  }, [products, search, category, sort])
+
+  if (loading) return <p className="container">Loading...</p>
+  if (error) return <p className="container">{error}</p>
 
   return (
     <div className="container">
       <h1>Smart Products</h1>
-      <div className="grid">
-        {products.map((p) => (
+
+      {/* Controls */}
+      <div className="controls">
+        <input
+          className="input"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Search products..."
+        />
+
+        <select className="select" value={category} onChange={e => setCategory(e.target.value)}>
+          {categories.map(c => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+
+        <select className="select" value={sort} onChange={e => setSort(e.target.value)}>
+          <option value="default">Sort</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="title-asc">Title: A → Z</option>
+        </select>
+      </div>
+
+      <p style={{ marginTop: 10, opacity: 0.7 }}>
+        Showing {visibleProducts.length} / {products.length}
+      </p>
+
+      <div className="grid" style={{ marginTop: 12 }}>
+        {visibleProducts.map(p => (
           <ProductCard key={p.id} product={p} />
         ))}
       </div>
     </div>
-  );
+  )
 }
