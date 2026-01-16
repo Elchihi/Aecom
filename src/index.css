@@ -273,3 +273,19 @@ body {
 
 /* small polish */
 h1{ margin: 0; }
+
+
+.toast{
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  background: #111;
+  color: white;
+  padding: 12px 14px;
+  border-radius: 12px;
+  box-shadow: 0 12px 26px rgba(0,0,0,0.25);
+  z-index: 100;
+  font-weight: 600;
+  font-size: 14px;
+}

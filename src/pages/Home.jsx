@@ -10,6 +10,7 @@ import {
   changeQty,
 } from "../services/cart.js";
 import Navbar from "../components/Navbar.jsx";
+import Toast from "../components/Toast.jsx";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -22,10 +23,17 @@ export default function Home() {
   const [sort, setSort] = useState("default");
   const [cart, setCart] = useLocalStorage("cart", []);
   const [cartOpen, setCartOpen] = useState(false);
+  const [toast, setToast] = useState("");
 
   function handleAdd(product) {
     setCart((prev) => addToCart(prev, product));
+    setCartOpen(true);
+
+    setToast("Added to cart ✅");
+    window.clearTimeout(window.__toastTimer);
+    window.__toastTimer = window.setTimeout(() => setToast(""), 1200);
   }
+
   function handleRemove(id) {
     setCart((prev) => removeFromCart(prev, id));
   }
@@ -120,11 +128,15 @@ export default function Home() {
           Showing {visibleProducts.length} / {products.length}
         </p>
 
-        <p style={{ marginTop: 8, fontWeight: 700 }}>
-          <button className="btn" onClick={() => setCartOpen(true)}>
-            Cart ({cartCount(cart)})
-          </button>
-        </p>
+        {visibleProducts.length === 0 ? (
+          <p style={{ opacity: 0.7, marginTop: 16 }}>No products found.</p>
+        ) : (
+          <div className="grid" style={{ marginTop: 12 }}>
+            {visibleProducts.map((p) => (
+              <ProductCard key={p.id} product={p} onAdd={handleAdd} />
+            ))}
+          </div>
+        )}
 
         <div className="grid" style={{ marginTop: 12 }}>
           {visibleProducts.map((p) => (
@@ -141,6 +153,7 @@ export default function Home() {
           onQty={handleQty}
         />
       )}
+      <Toast message={toast} />
     </>
   );
 }
