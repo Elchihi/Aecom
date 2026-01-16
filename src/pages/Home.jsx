@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "../services/productApi.js";
+import ProductCard from "../components/ProductCard.jsx";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -18,23 +19,17 @@ export default function Home() {
       });
   }, []);
 
-  if (loading) {
-    return <p style={{ padding: 24 }}>Loading...</p>;
-  }
-
-  if (error) {
-    return <p style={{ padding: 24, color: "red" }}>{error}</p>;
-  }
+  if (loading) return <p className="container">Loading...</p>;
+  if (error) return <p className="container">{error}</p>;
 
   return (
-    <div style={{ padding: 24 }}>
+    <div className="container">
       <h1>Smart Products</h1>
-
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>{product.title}</li>
+      <div className="grid">
+        {products.map((p) => (
+          <ProductCard key={p.id} product={p} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
